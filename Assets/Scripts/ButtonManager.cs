@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ButtonManager : MonoBehaviour
 {
-    public void Regenerate()
+    public void ShowBuildMenu()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
-        Thread.Sleep(5);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GameObject.Find("BuildCanvas").GetComponent<Animator>().Play("Show");
+    }
+
+    public void BuildRoad()
+    {
+        GameObject.Find("MouseManager").GetComponent<MouseManager>().currentRegion.GetComponent<Region>().AddLogisticPoint(1);
     }
 }
