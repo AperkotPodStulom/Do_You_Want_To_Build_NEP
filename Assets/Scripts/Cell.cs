@@ -8,6 +8,7 @@ public class Cell : MonoBehaviour
     public Vector2Int Position { get; set; }
     public bool IsOccupied = false;
     public GameObject RegionSeed = null;
+    public int FloorLevel = 1;
 
     private void FixedUpdate()
     {
@@ -18,7 +19,7 @@ public class Cell : MonoBehaviour
     {
         if (transform.parent != null)
         {
-            
+            Debug.Log(transform.parent.name);
         }
     }
 }

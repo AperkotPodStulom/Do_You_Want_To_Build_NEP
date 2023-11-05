@@ -59,11 +59,11 @@ public class RegionCreator : MonoBehaviour
 
             _seedsCreated = true;
 
-            foreach (var obj in this.seeds)
+            for (int i = 0; i < this.seeds.Count; i++)
             {
                 var gobj = new GameObject();
-                gobj.name = "region";
-                obj.transform.parent = gobj.transform;
+                gobj.name = "region" + i.ToString();
+                this.seeds[i].transform.parent = gobj.transform;
             }
         }
 
@@ -166,7 +166,7 @@ public class RegionCreator : MonoBehaviour
             {
                 if (cell.Value.GetComponent<Cell>().IsOccupied)
                 {
-                    if (cell.Value.GetComponent<Cell>().RegionSeed.transform.parent.childCount <= _maxNumberOfCells)
+                    if (cell.Value.GetComponent<Cell>().RegionSeed.transform.parent.childCount < _maxNumberOfCells)
                     {
                         Vector2Int up = new Vector2Int((int)cell.Value.transform.position.x, (int)cell.Value.transform.position.y + 1);
                         Vector2Int upRight = new Vector2Int((int)cell.Value.transform.position.x + 1, (int)cell.Value.transform.position.y + 1);
@@ -284,14 +284,15 @@ public class RegionCreator : MonoBehaviour
                     foreach (var seed in this.seeds)
                     {
                         if (seed.transform.parent.childCount < _maxNumberOfCells)
+                        {
+                            Debug.Log(_maxNumberOfCells.ToString() + " " + seed.transform.parent.childCount);
                             return;
-                        else
-                            continue;
+                        }
                     }
                 }
                     
             }
-
+            
             _isWorldCreated = true;
             ClearWorld();
         }
@@ -302,8 +303,8 @@ public class RegionCreator : MonoBehaviour
         foreach (var cell in Grid.Cells)
         {
             if (!cell.Value.GetComponent<Cell>().IsOccupied)
-            {
-                cell.Value.SetActive(false);
+            {  
+                Destroy(cell.Value);
                 Debug.Log("Cleared");
             }
         }
